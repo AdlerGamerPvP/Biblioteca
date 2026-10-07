@@ -11,7 +11,7 @@ public class Utilidades {
         String pesquisa = null;
         Integer psq = 0;
         boolean verify = false;
-        psq = Integer.parseInt(readln("Escolha qual metodo de pesquisa: "));   //Voce teria que utilizar um comparator para pesquisar e mostrar em ordem alfabetica
+        psq = Integer.parseInt(readln("Escolha qual metodo de pesquisa: \n1 - Nome \n2 - Data\n 3 - Autor \n 4 - ID \n 5 - Exibir todos"));   //Voce teria que utilizar um comparator para pesquisar e mostrar em ordem alfabetica
         switch (psq){
             case 1:
                 pesquisa = readln("Escreva o nome do livro: ");
@@ -57,6 +57,19 @@ public class Utilidades {
                     }
                 break;
             case 4:
+                int pesquisaId = Integer.parseInt(readln("Escreva o ID do livro: "));//Este tambem precisaria de um comparator customizado
+                for (int x = 0; x != storage.size(); x++) {
+                    if (storage.get(x).getId() == pesquisaId) {//Mas é muito mais simples que os outros pois são só numeros
+                        println(storage.get(x));//https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
+                        x = storage.size() - 1;
+                        verify = true;
+                    }
+                }
+                if (!verify) {
+                    println("Nenhum livro encontrado.");
+                }
+                break;
+            case 5:
                 println(storage); // tem que ter um comparador se quiser mostrar por ordem alfabetica, já que isso mostra por data de entrada
                 break;
         }
@@ -64,7 +77,7 @@ public class Utilidades {
     }
     public static void editarLivro(ArrayList<Livro> storage){
         int esc = Integer.parseInt(readln("Digite o id do livro"));
-        int x = storage.indexOf(esc);
+        int x = storage.get(esc).getId() - 1;
         String novo = null;
         int modesc = Integer.parseInt(readln("Qual atributo do livro deseja modificar? 1- Nome\n 2- Genero\n 3- Autor\n 4- Data\n"));
         switch (modesc){
@@ -90,5 +103,16 @@ public class Utilidades {
         int esc = Integer.parseInt(readln("Digite o id do livro"));//Coloca algo sobre confirmação, eu esqueci o nome quem liga fodase
         int x = storage.indexOf(esc - 1);
         storage.remove(x);
+    }
+    public static void adicionarLivro(ArrayList<Livro> storage){
+        String nome = readln("Digite o nome do livro: ");
+        String genero = readln("Digite o genero do livro: ");
+        String autor = readln("Digite o autor do livro: ");
+        String data = readln("Digite a data de lançamento do livro:");
+        Integer id = storage.size() + 1;
+
+        Livro newl = new Livro(nome, genero, autor, data, id);
+
+        storage.add(newl);
     }
 }
