@@ -10,39 +10,54 @@ public class Utilidades {
     public static void acharLivro(ArrayList<Livro> storage){
         String pesquisa = null;
         Integer psq = 0;
-        psq = Integer.parseInt(readln("Escolha qual metodo de pesquisa"));   //Voce teria que utilizar um comparator
+        boolean verify = false;
+        psq = Integer.parseInt(readln("Escolha qual metodo de pesquisa: "));   //Voce teria que utilizar um comparator para pesquisar e mostrar em ordem alfabetica
         switch (psq){
             case 1:
-                pesquisa = readln("Escreva o nome do livro");   //Voce teria que utilizar um comparator
-                if(storage.get(0).getNome().contains(pesquisa)){//customizado para mostrar alfabeticamente
-                    println(storage.get(0).getNome().contains(pesquisa));//já que é uma arraylist customizada
+                pesquisa = readln("Escreva o nome do livro: ");
+                verify = false;
+                for (int x = 0; x != storage.size(); x++) {//Voce teria que utilizar um comparator
+                    if (storage.get(x).getNome().contains(pesquisa)) {//customizado para mostrar alfabeticamente
+                        println(storage.get(x));//já que é uma arraylist customizada
+                        x = storage.size() - 1;
+                        verify = true;
+                    }
                 }
-                else{
-                    println("Não foi encontrado um livro com este nome, tente novamente.");
+                if(!verify){
+                    println("Nenhum livro encontrado.");
                 }
                 break;
             case 2:
                 pesquisa = readln("Escreva a data do livro, você pode pesquisar em ano ou dia, mês, ano: ");// Essas duas opções por causa de poder ler os ultimos digito de uma string
+                verify = false;
                 if (pesquisa.length() == 4 || pesquisa.length() == 8 ) {//Este tambem precisaria de um comparator customizado
-                    if (storage.get(1).getData().contains(pesquisa)) {//Mas é muito mais simples que os outros pois são só numeros
-                        println(storage.get(1).getData().contains(pesquisa));//https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
-                    } else { //Na verdade, crie uma nova arraylist, atualize ela com o comparator e utilize ela para printar
-                        //CORREÇÃO: pode utilizar algo como storage.indexOf(esc); que eu usei lá em baixo no editarLivro
-                        println("Não foi encontrado um livro com esta data de lançamento, tente novamente.");
-                    }//Essa porra funcionou de algum jeito, só tem que arrumar a escolha de livros pois ele só procura o primeiro index e eu não sei arrumar essa bosta, deve ser um for loop nessa porra
-                }
-                else{
-                    println("Data invalida, tente novamente");
+                    for (int x = 0; x != storage.size(); x++) {
+                        if (storage.get(x).getData().contains(pesquisa)) {//Mas é muito mais simples que os outros pois são só numeros
+                            println(storage.get(x));//https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
+                            x = storage.size() - 1;
+                            verify = true;
+                        }
+                    }
+                    if (!verify) {
+                        println("Nenhum livro encontrado.");
+                    }
                 }
                 break;
             case 3:
-                pesquisa = readln("Escreva o nome do autor");//Mesma coisa do case 1 em cima
-                if(storage.get(1).getNome().contains(pesquisa)){
-                    println(storage.get(1).getNome().contains(pesquisa));
-                }
-                else{
-                    println("Não foi encontrado um livro com este nome, tente novamente.");
-                }
+                pesquisa = readln("Escreva o nome do autor: ");//Este tambem precisaria de um comparator customizado
+                    for (int x = 0; x != storage.size(); x++) {
+                        if (storage.get(x).getAutor().contains(pesquisa)) {//Mas é muito mais simples que os outros pois são só numeros
+                            println(storage.get(x));//https://stackoverflow.com/questions/2784514/sort-arraylist-of-custom-objects-by-property
+                            x = storage.size() - 1;
+                            verify = true;
+                        }
+                    }
+                    if (!verify) {
+                        println("Nenhum livro encontrado.");
+                    }
+                break;
+            case 4:
+                println(storage); // tem que ter um comparador se quiser mostrar por ordem alfabetica, já que isso mostra por data de entrada
                 break;
         }
 
@@ -75,11 +90,5 @@ public class Utilidades {
         int esc = Integer.parseInt(readln("Digite o id do livro"));//Coloca algo sobre confirmação, eu esqueci o nome quem liga fodase
         int x = storage.indexOf(esc - 1);
         storage.remove(x);
-    }
-    public static void exibirLivro(String nome, String genero, String autor, String data){ //Isso aqui dá pra fazer no toString se realmente quiser, aqui tá feio
-        println("Nome: " + nome +
-              "\nGenero: " + genero +
-              "\nAutor: " + autor +
-              "\nData de lançamento: " + data);
     }
 }

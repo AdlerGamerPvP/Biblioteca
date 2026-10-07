@@ -1,3 +1,5 @@
+import static java.lang.IO.println;
+
 public class Livro extends Prateleira{
 
 
@@ -9,4 +11,12 @@ public class Livro extends Prateleira{
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return ("\nNome: " + nome +
+                "\nGenero: " + genero +
+                "\nAutor: " + autor +
+                "\nData de lançamento: " + data +
+                "\nID: " + id + "\n");
+    }
 }
